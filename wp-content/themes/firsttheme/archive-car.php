@@ -31,5 +31,5 @@ get_header();
 	</div>
 
 <?php
-//get_sidebar();
+get_sidebar('cars');
 get_footer();
