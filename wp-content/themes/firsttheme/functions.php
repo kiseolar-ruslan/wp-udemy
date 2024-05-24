@@ -7,6 +7,7 @@
  * @package firsttheme
  */
 
+require_once get_template_directory() . '/inc/widget-about.php';
 
 function firsttheme_widgets_init() {
 	register_sidebar(
@@ -32,6 +33,8 @@ function firsttheme_widgets_init() {
 			'after_title'   => '</h2>',
 		)
 	);
+
+    register_widget('FirstthemeAboutWidget');
 }
 add_action( 'widgets_init', 'firsttheme_widgets_init' );
 
