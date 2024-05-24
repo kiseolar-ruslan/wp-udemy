@@ -7,6 +7,7 @@
  * @package firsttheme
  */
 
+//widget connection
 require_once get_template_directory() . '/inc/widget-about.php';
 
 function firsttheme_widgets_init() {
