@@ -19,18 +19,29 @@ get_header();
         </header>
 
         <?php
-        if (have_posts() === true) {
-            while (have_posts() === true) {
-                the_post();
+        $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
+        $cars = new WP_Query(
+            array(
+                'post_type'      => 'car',
+                'posts_per_page' => 2,
+                'paged'          => $paged,
+            )
+        );
+
+        if ($cars->have_posts() === true) {
+            while ($cars->have_posts() === true) {
+                $cars->the_post();
                 get_template_part('partials/content');
             }
             //Pagination
             echo '<div class="pagination">';
-            echo paginate_links();
+            firsttheme_paginate($cars);
             echo '</div>';
         } else {
             get_template_part('partials/content-none', 'none');
         }
+        wp_reset_postdata();
         ?>
     </div>
 

@@ -5,11 +5,14 @@
 
 get_header();
 echo '<div class="cars">';
+$paged = get_query_var('page') ? get_query_var('page') : 1;
+
 $args = array(
     'post_type'      => 'car',
     'orderby'        => 'date',
     'order'          => 'ASC',
-    'posts_per_page' => -1,
+    'paged'          => $paged,
+    'posts_per_page' => 1,
 );
 $cars = new WP_Query($args);
 
@@ -18,6 +21,7 @@ if ($cars->have_posts() === true) {
         $cars->the_post();
         get_template_part('partials/content');
     }
+    firsttheme_paginate($cars);
 } else {
     get_template_part('partials/content-none', 'none');
 }
