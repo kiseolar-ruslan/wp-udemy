@@ -9,6 +9,8 @@
 
 //widget connection
 require_once get_template_directory() . '/inc/widget-about.php';
+//meta boxes connection
+require_once get_template_directory() . '/inc/metaboxes.php';
 
 function firsttheme_paginate(object $query): void
 {
@@ -115,6 +117,7 @@ function firsttheme_init()
 
     // add thumb support
     add_theme_support('post-thumbnails');
+    add_image_size('car-cover', 240, 180);
 
     add_theme_support(
         'post-formats',
