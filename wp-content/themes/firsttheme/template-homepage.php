@@ -20,6 +20,11 @@ if ($cars->have_posts() === true) {
     while ($cars->have_posts() === true) {
         $cars->the_post();
         get_template_part('partials/content');
+
+        //metadata output
+        echo '<p>';
+            echo 'Price: ' . get_post_meta(get_the_ID(), 'custom_price', true);
+        echo '</p>';
     }
     firsttheme_paginate($cars);
 } else {

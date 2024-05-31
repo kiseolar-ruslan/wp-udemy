@@ -13,6 +13,9 @@ require_once get_template_directory() . '/inc/widget-about.php';
 //meta boxes connection
 require_once get_template_directory() . '/inc/metaboxes.php';
 
+//ACF plugin meta boxes connection
+require_once get_template_directory() . '/inc/acf.php';
+
 //register the required plugins for this theme.
 require_once get_template_directory() . '/inc/class-tgm-plugin-activation.php';
 
