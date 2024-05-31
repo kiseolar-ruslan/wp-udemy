@@ -1,3 +1,8 @@
 <?php
 
-echo [1,2,3,4,5,][1];
+$a = ['qwe', 'rty', 'uio'];
+
+foreach ($a as $item) {
+    echo $item[0];
+}
+

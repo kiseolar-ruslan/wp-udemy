@@ -11,7 +11,6 @@ function firsttheme_add_metabox()
         'high'
     );
 }
-
 add_action('add_meta_boxes', 'firsttheme_add_metabox');
 
 function firsttheme_cars_metabox_html($post)
