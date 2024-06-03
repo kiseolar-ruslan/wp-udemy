@@ -1,8 +1,12 @@
 <?php
 
-$a = ['qwe', 'rty', 'uio'];
+$b = [
+    'test' => [
 
-foreach ($a as $item) {
-    echo $item[0];
-}
+    ]
+];
+$b['test'][] = 1;
+$b['test'][] = 2;
+$b['test'][] = 3;
 
+print_r($b);

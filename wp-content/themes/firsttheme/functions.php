@@ -7,14 +7,8 @@
  * @package firsttheme
  */
 
-//widget connection
-require_once get_template_directory() . '/inc/widget-about.php';
-
-//meta boxes connection
-require_once get_template_directory() . '/inc/metaboxes.php';
-
-//ACF plugin meta boxes connection
-require_once get_template_directory() . '/inc/acf.php';
+//Redux connection
+require_once get_template_directory() . '/inc/redux-options.php';
 
 //register the required plugins for this theme.
 require_once get_template_directory() . '/inc/class-tgm-plugin-activation.php';
@@ -120,9 +114,7 @@ function firsttheme_widgets_init()
         )
     );
 
-    register_widget('FirstthemeAboutWidget');
 }
-
 add_action('widgets_init', 'firsttheme_widgets_init');
 
 function firsttheme_enqueue_scripts()
@@ -147,14 +139,12 @@ function firsttheme_enqueue_scripts()
         wp_enqueue_script('comment-reply');
     }
 }
-
 add_action('wp_enqueue_scripts', 'firsttheme_enqueue_scripts');
 
 function firsttheme_show_meta_data()
 {
     echo "<meta name='author' content='test content'>";
 }
-
 add_action('wp_head', 'firsttheme_show_meta_data');
 
 function firsttheme_init()
@@ -178,6 +168,17 @@ function firsttheme_init()
         )
     );
 
+    // Add default posts and comments RSS feed links to head.
+    add_theme_support('automatic-feed-links');
+
+    /*
+    * Let WordPress manage the document title.
+    * By adding theme support, we declare that this theme does not use a
+    * hard-coded <title> tag in the document head, and expect WordPress to
+    * provide it for us.
+    */
+    add_theme_support('title-tag');
+
     // add multilingual support
     load_theme_textdomain('firsttheme', get_template_directory() . '/languages');
 
@@ -197,94 +198,7 @@ function firsttheme_init()
 
     add_post_type_support('car', 'post-formats');
 }
-
 add_action('after_setup_theme', 'firsttheme_init', 0);
-
-function firsttheme_register_post_type()
-{
-    $args = array(
-        'hierarchical'      => false,
-        'labels'            => array(
-            'name'              => esc_html_x('Brands', 'taxonomy general name', 'firsttheme'),
-            'singular_name'     => esc_html_x('Brand', 'taxonomy singular name', 'firsttheme'),
-            'search_items'      => esc_html__('Search Brands', 'firsttheme'),
-            'all_items'         => esc_html__('All Brands', 'firsttheme'),
-            'parent_item'       => esc_html__('Parent Brand', 'firsttheme'),
-            'parent_item_colon' => esc_html__('Parent Brand:', 'firsttheme'),
-            'edit_item'         => esc_html__('Edit Brand', 'firsttheme'),
-            'update_item'       => esc_html__('Update Brand', 'firsttheme'),
-            'add_new_item'      => esc_html__('Add New Brand', 'firsttheme'),
-            'new_item_name'     => esc_html__('New Brand Name', 'firsttheme'),
-            'menu_name'         => esc_html__('Brand', 'firsttheme'),
-        ),
-        'show_ui'           => true,
-        'rewrite'           => array('slug' => 'brands'),
-        'query_var'         => true,
-        'show_in_rest'      => true,
-        'show_admin_column' => true,
-    );
-
-    register_taxonomy('brand', array('car'), $args);
-
-    unset($args);
-
-    $args = array(
-        'hierarchical'      => true,
-        'labels'            => array(
-            'name'              => esc_html_x('Manufactures', 'taxonomy general name', 'firsttheme'),
-            'singular_name'     => esc_html_x('Manufacture', 'taxonomy singular name', 'firsttheme'),
-            'search_items'      => esc_html__('Search Manufactures', 'firsttheme'),
-            'all_items'         => esc_html__('All Manufactures', 'firsttheme'),
-            'parent_item'       => esc_html__('Parent Manufacture', 'firsttheme'),
-            'parent_item_colon' => esc_html__('Parent Manufacture:', 'firsttheme'),
-            'edit_item'         => esc_html__('Edit Manufacture', 'firsttheme'),
-            'update_item'       => esc_html__('Update Manufacture', 'firsttheme'),
-            'add_new_item'      => esc_html__('Add New Manufacture', 'firsttheme'),
-            'new_item_name'     => esc_html__('New Manufacture Name', 'firsttheme'),
-            'menu_name'         => esc_html__('Manufacture', 'firsttheme'),
-        ),
-        'show_ui'           => true,
-        'rewrite'           => array('slug' => 'manufactures'),
-        'query_var'         => true,
-        'show_in_rest'      => true,
-        'show_admin_column' => true,
-    );
-
-    register_taxonomy('manufacture', array('car'), $args);
-
-    unset($args);
-
-    $args = array(
-        'label'              => esc_html__('Cars', 'firsttheme'),
-        'labels'             => array(
-            'add_new'      => esc_html__('Add New', 'firsttheme'),
-            'all_items'    => esc_html__('All Cars', 'firsttheme'),
-            'not_found'    => esc_html__('No Cars Found', 'firsttheme'),
-            'search_items' => esc_html__('Search Cars', 'firsttheme'),
-        ),
-        'supports'           => array(
-            'title',
-            'editor',
-            'author',
-            'thumbnail',
-            'excerpt',
-            'comments',
-            'revisions',
-            'page-attributes'
-        ),
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'has_archive'        => true,
-        'rewrite'            => array('slug' => 'cars'),
-        'show_in_rest'       => true,
-    );
-
-    register_post_type('car', $args);
-}
-
-add_action('init', 'firsttheme_register_post_type');
 
 //после создания post type должен быть данный хук, для решения проблемы 404
 function firsttheme_rewrite_rules()
@@ -292,72 +206,7 @@ function firsttheme_rewrite_rules()
     firsttheme_register_post_type();
     flush_rewrite_rules();
 }
-
 add_action('after_switch_theme', 'firsttheme_rewrite_rules');
-
-
-if (!defined('_S_VERSION')) {
-    // Replace the version number of the theme on each release.
-    define('_S_VERSION', '1.0.0');
-}
-
-/**
- * Sets up theme defaults and registers support for various WordPress features.
- *
- * Note that this function is hooked into the after_setup_theme hook, which
- * runs before the init hook. The init hook is too late for some features, such
- * as indicating support for post thumbnails.
- */
-function firsttheme_setup()
-{
-    // Add default posts and comments RSS feed links to head.
-    add_theme_support('automatic-feed-links');
-
-    /*
-        * Let WordPress manage the document title.
-        * By adding theme support, we declare that this theme does not use a
-        * hard-coded <title> tag in the document head, and expect WordPress to
-        * provide it for us.
-        */
-    add_theme_support('title-tag');
-
-    /*
-        * Switch default core markup for search form, comment form, and comments
-        * to output valid HTML5.
-        */
-
-    // Set up the WordPress core custom background feature.
-    add_theme_support(
-        'custom-background',
-        apply_filters(
-            'firsttheme_custom_background_args',
-            array(
-                'default-color' => 'ffffff',
-                'default-image' => '',
-            )
-        )
-    );
-
-    // Add theme support for selective refresh for widgets.
-    add_theme_support('customize-selective-refresh-widgets');
-
-    /**
-     * Add support for core custom logo.
-     *
-     * @link https://codex.wordpress.org/Theme_Logo
-     */
-    add_theme_support(
-        'custom-logo',
-        array(
-            'height'      => 250,
-            'width'       => 250,
-            'flex-width'  => true,
-            'flex-height' => true,
-        )
-    );
-}
-
-add_action('after_setup_theme', 'firsttheme_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -370,7 +219,6 @@ function firsttheme_content_width()
 {
     $GLOBALS['content_width'] = apply_filters('firsttheme_content_width', 640);
 }
-
 add_action('after_setup_theme', 'firsttheme_content_width', 0);
 
 /**
@@ -379,33 +227,4 @@ add_action('after_setup_theme', 'firsttheme_content_width', 0);
 function firsttheme_scripts()
 {
 }
-
 add_action('wp_enqueue_scripts', 'firsttheme_scripts');
-
-/**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/inc/custom-header.php';
-
-/**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/inc/template-tags.php';
-
-/**
- * Functions which enhance the theme by hooking into WordPress.
- */
-require get_template_directory() . '/inc/template-functions.php';
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-if (defined('JETPACK__VERSION')) {
-    require get_template_directory() . '/inc/jetpack.php';
-}
-

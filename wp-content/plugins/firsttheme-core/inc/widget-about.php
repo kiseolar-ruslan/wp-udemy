@@ -101,3 +101,9 @@ class FirstthemeAboutWidget extends WP_Widget
         return $instance;
     }
 }
+
+function firsttheme_widget_init()
+{
+    register_widget('FirstthemeAboutWidget');
+}
+add_action('widgets_init', 'firsttheme_widget_init');
