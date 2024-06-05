@@ -119,11 +119,12 @@ add_action('widgets_init', 'firsttheme_widgets_init');
 
 function firsttheme_enqueue_scripts()
 {
+    $cssFile = get_template_directory() . '/assets/css/general.css';
     wp_enqueue_style(
         'firsttheme-general',
         get_template_directory_uri() . '/assets/css/general.css',
         array(),
-        '1.0',
+        filemtime($cssFile),
         'all'
     );
 
