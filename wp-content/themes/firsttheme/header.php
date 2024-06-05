@@ -23,11 +23,9 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<?php
+<button id="button_car">Show all cars</button>
+<div id="car_content" style="background-color: #6584d0; border: 1px solid #f0ad4e"></div>
 
-if (is_tax('brand', 'mercedes') === true) {
-    echo 'true' . '<br>' ;
-}
 
 
 

@@ -18,11 +18,6 @@ get_header();
                         'next_text' => esc_html__('Next', 'firsttheme')
                 )
         );
-//        posts_nav_link(
-//            ' <--> ',
-//            esc_html__('Prev', 'firsttheme'),
-//            esc_html__('Next', 'firsttheme')
-//        );
         echo '</div>';
     } else {
         get_template_part('partials/content-none', 'none');
@@ -31,6 +26,5 @@ get_header();
 </div>
 
 <?php
-//get_sidebar();
-//get_footer();
+get_footer();
 ?>

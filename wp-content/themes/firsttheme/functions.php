@@ -130,9 +130,26 @@ function firsttheme_enqueue_scripts()
     wp_enqueue_script(
         'firsttheme-script',
         get_template_directory_uri() . '/assets/js/script.js',
-        array(),
+        array('jquery'),
         '1.0',
         true
+    );
+
+    wp_enqueue_script(
+        'firsttheme-ajax',
+        get_template_directory_uri() . '/assets/js/ajax.js',
+        array('jquery'),
+        '1.0',
+        true
+    );
+
+    wp_localize_script(
+        'firsttheme-ajax',
+        'firsttheme_ajax_script',
+        array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('ajax-nonce'),
+        )
     );
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
@@ -140,6 +157,32 @@ function firsttheme_enqueue_scripts()
     }
 }
 add_action('wp_enqueue_scripts', 'firsttheme_enqueue_scripts');
+
+function firsttheme_ajax_example()
+{
+    if (wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce') === false) {
+        die;
+    }
+
+    $cars = new WP_Query(array(
+        'post_type' => 'car',
+        'posts_per_page' => -1,
+    ));
+
+    if ($cars->have_posts() === true) {
+        while ($cars->have_posts() === true) {
+            $cars->the_post();
+            get_template_part('partials/content');
+        }
+    } else {
+        get_template_part('partials/content-none', 'none');
+    }
+    wp_reset_postdata();
+
+    die; //there should always be 'die' at the end of the AJAX function
+}
+add_action('wp_ajax_firsttheme_ajax_example', 'firsttheme_ajax_example'); // ajax for authorised users
+add_action('wp_ajax_nopriv_firsttheme_ajax_example', 'firsttheme_ajax_example'); // ajax for unauthorised users
 
 function firsttheme_show_meta_data()
 {
