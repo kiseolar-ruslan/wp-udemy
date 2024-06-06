@@ -3,15 +3,15 @@ jQuery(document).ready(function ($){
         e.preventDefault;
 
         $.ajax({
-            url : firsttheme_ajax_script.ajaxurl,
-            data: {
+            url  : firsttheme_ajax_script.ajaxurl,
+            data : {
                 'action' : 'firsttheme_ajax_example',
-                'nonce'  :firsttheme_ajax_script.nonce
+                'nonce'  : firsttheme_ajax_script.nonce
             },
             success : function (data) {
                 $('#car_content').html(data);
             },
-            error : function (errorThrown) {
+            error   : function (errorThrown) {
                 console.log(errorThrown);
             }
         })

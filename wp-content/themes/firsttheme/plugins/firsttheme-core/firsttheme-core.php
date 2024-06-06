@@ -25,3 +25,6 @@ require_once __DIR__ . '/inc/metaboxes.php';
 require_once __DIR__ . '/inc/acf.php';
 
 require_once __DIR__ . '/inc/custom_post_type.php';
+
+//add elementor widget
+require_once __DIR__ . '/inc/elementor.php';

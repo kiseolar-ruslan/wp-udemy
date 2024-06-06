@@ -13,6 +13,7 @@
  */
 
 get_header();
+the_content();
 ?>
 	<main id="primary" class="site-main">
 		<?php

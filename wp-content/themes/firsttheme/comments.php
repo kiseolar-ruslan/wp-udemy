@@ -54,6 +54,7 @@ if ( post_password_required() ) {
 				array(
 					'style'      => 'ol',
 					'short_ping' => true,
+                    'callback'   => 'firsttheme_custom_comments',
 				)
 			);
 			?>
@@ -71,7 +72,9 @@ if ( post_password_required() ) {
 
 	endif; // Check for have_comments().
 
-	comment_form();
+	comment_form(array(
+            'label_submit' => 'Send',
+    ));
 	?>
 
 </div><!-- #comments -->
