@@ -1,1 +1,7 @@
 .idea
+# ignore log files and databases
+*.log
+*.sql
+*.sqlite
+# Configuration
+wp-config.php
