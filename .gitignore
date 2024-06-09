@@ -1,7 +1,12 @@
 .idea
+.DS_Store
 # ignore log files and databases
 *.log
 *.sql
 *.sqlite
 # Configuration
 wp-config.php
+# htaccess
+/.htaccess
+# Uploads
+/wp-content/uploads/

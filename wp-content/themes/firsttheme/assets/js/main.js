@@ -99,7 +99,7 @@
 
     // Vendor carousel
     $('.vendor-carousel').owlCarousel({
-        loop: true,
+        // loop: true,
         margin: 30,
         dots: true,
         loop: true,
